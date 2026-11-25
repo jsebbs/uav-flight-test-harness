@@ -1,0 +1,63 @@
+# System requirements for the simulated flight controller.
+# Every requirement must be verified by at least one test tagged
+# @pytest.mark.req("<ID>"); the suite fails if one is left uncovered.
+
+[[requirement]]
+id = "PROTO-001"
+text = "Frames shall carry a CRC-16/CCITT-FALSE checksum; frames with a bad CRC shall be discarded."
+
+[[requirement]]
+id = "PROTO-002"
+text = "The decoder shall resynchronise on the next valid frame after garbage or corrupted bytes."
+
+[[requirement]]
+id = "PROTO-003"
+text = "The decoder shall never crash on arbitrary input and shall reassemble frames split across reads."
+
+[[requirement]]
+id = "PROTO-004"
+text = "Every command shall be acknowledged with the request's sequence number; unknown or malformed messages shall be NACKed, not ignored."
+
+[[requirement]]
+id = "ARM-001"
+text = "The vehicle shall only arm from DISARMED with a GPS fix and battery >= 30%."
+
+[[requirement]]
+id = "ARM-002"
+text = "The vehicle shall reject DISARM while airborne."
+
+[[requirement]]
+id = "ARM-003"
+text = "The vehicle shall auto-disarm after 10 s armed on the ground without a takeoff."
+
+[[requirement]]
+id = "FLT-001"
+text = "On TAKEOFF the vehicle shall climb at 2.0 m/s and hold the target altitude within 0.1 m."
+
+[[requirement]]
+id = "FLT-002"
+text = "Altitude targets outside (0, 120] m shall be rejected with REJECTED_GEOFENCE."
+
+[[requirement]]
+id = "FLT-003"
+text = "On LAND the vehicle shall descend at 1.0 m/s and disarm on touchdown."
+
+[[requirement]]
+id = "FS-001"
+text = "Loss of GPS fix in flight shall trigger FAILSAFE_LAND."
+
+[[requirement]]
+id = "FS-002"
+text = "Battery at or below 15% in flight shall trigger FAILSAFE_LAND."
+
+[[requirement]]
+id = "FS-003"
+text = "No vehicle messages for more than 3.0 s in flight shall trigger FAILSAFE_LAND and set COMMS_LOST."
+
+[[requirement]]
+id = "FS-004"
+text = "During FAILSAFE_LAND, operator altitude commands shall be rejected."
+
+[[requirement]]
+id = "TLM-001"
+text = "Telemetry shall report state, altitude, battery, GPS fix, status flags and sim time."
